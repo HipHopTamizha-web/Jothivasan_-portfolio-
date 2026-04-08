@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>JOTHIVASAN | Web Developer — Websites That Convert</title>
+    <meta name="description"
+        content="I build websites that turn visitors into customers. Helping businesses grow with modern, high-converting websites. Based in Tamil Nadu, India." />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container": "#201f20",
+                        "outline": "#849396",
+                        "on-primary": "#00363d",
+                        "primary-fixed-dim": "#00daf3",
+                        "surface": "#131314",
+                        "on-background": "#e5e2e3",
+                        "primary-container": "#00e5ff",
+                        "surface-container-low": "#1c1b1c",
+                        "on-surface-variant": "#bac9cc",
+                        "secondary-container": "#5203d5",
+                        "on-primary-container": "#00626e",
+                        "primary": "#c3f5ff",
+                        "on-secondary-container": "#c0acff",
+                        "surface-container-highest": "#353436",
+                        "surface-container-high": "#2a2a2b",
+                        "on-surface": "#e5e2e3",
+                        "surface-tint": "#00daf3",
+                        "on-secondary": "#370096",
+                        "background": "#131314",
+                        "surface-dim": "#131314",
+                        "outline-variant": "#3b494c",
+                        "surface-variant": "#353436",
+                        "surface-bright": "#3a393a",
+                        "secondary": "#cdbdff",
+                        "surface-container-lowest": "#0e0e0f",
+                        "error": "#ffb4ab"
+                    },
+                    fontFamily: {
+                        headline: ["Manrope", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Glass card */
+        .glass-card {
+            background: rgba(32, 31, 32, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(59, 73, 76, 0.15);
+        }
+
+        /* Subtle glow */
+        .neon-glow {
+            box-shadow: 0 0 15px rgba(0, 218, 243, 0.1);
+        }
+
+        /* Project card hover */
+        .project-card {
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 218, 243, 0.12);
+        }
+
+        /* Infinite scroll */
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .scroll-track {
+            animation: scroll-left 25s linear infinite;
+        }
+
+        .scroll-track:hover {
+            animation-play-state: paused;
+        }
+
+        @media (max-width: 768px) {
+            .scroll-track {
+                animation-duration: 40s;
+            }
+        }
+
+        /* Value card hover */
+        .value-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 218, 243, 0.08);
+        }
+
+        /* Pricing card hover */
+        .pricing-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Fade in animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30 selection:text-primary">
+
+    <!-- ==================== NAVIGATION ==================== -->
+    <nav class="fixed top-0 w-full z-50 bg-[#131314]/80 backdrop-blur-xl border-b border-outline-variant/10"
+        id="navbar">
+        <div class="flex justify-between items-center h-16 sm:h-20 px-5 sm:px-8 max-w-7xl mx-auto">
+            <!-- Hamburger (Left on Mobile) -->
+            <button id="menu-toggle"
+                class="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 order-first"
+                aria-label="Menu">
+                <span class="block w-6 h-0.5 bg-on-surface transition-all duration-300" id="bar1"></span>
+                <span class="block w-6 h-0.5 bg-on-surface transition-all duration-300" id="bar2"></span>
+                <span class="block w-6 h-0.5 bg-on-surface transition-all duration-300" id="bar3"></span>
+            </button>
+
+            <!-- Logo (Right on Mobile, Left on Desktop) -->
+            <a href="#"
+                class="text-lg sm:text-xl font-black tracking-tighter text-on-surface font-headline uppercase md:order-first order-last text-right md:text-left">PORTFOLIO</a>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-8 font-headline tracking-tight text-sm font-medium">
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="#work">Projects</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="#tools">Tools</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#why-me">Why
+                    Me</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="#pricing">Pricing</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="#contact">Contact</a>
+            </div>
+
+            <div class="hidden md:flex items-center gap-3">
+                <a href="form.html"
+                    class="bg-primary text-on-primary px-5 py-2.5 rounded-lg font-bold text-sm transition-all hover:shadow-[0_0_20px_rgba(0,218,243,0.15)] active:scale-95">
+                    Build Your Website
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed inset-0 z-[60] bg-surface/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8"
+        id="mobile-menu">
+        <button id="menu-close" class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center"
+            aria-label="Close menu">
+            <span class="material-symbols-outlined text-2xl text-on-surface">close</span>
+        </button>
+        <a class="text-2xl font-headline font-bold text-on-surface hover:text-primary transition-colors" href="#work"
+            onclick="closeMenu()">Projects</a>
+        <a class="text-2xl font-headline font-bold text-on-surface hover:text-primary transition-colors" href="#tools"
+            onclick="closeMenu()">Tools</a>
+        <a class="text-2xl font-headline font-bold text-on-surface hover:text-primary transition-colors" href="#why-me"
+            onclick="closeMenu()">Why Me</a>
+        <a class="text-2xl font-headline font-bold text-on-surface hover:text-primary transition-colors" href="#pricing"
+            onclick="closeMenu()">Pricing</a>
+        <a class="text-2xl font-headline font-bold text-on-surface hover:text-primary transition-colors" href="#contact"
+            onclick="closeMenu()">Contact</a>
+        <a href="form.html" class="mt-4 bg-primary text-on-primary px-8 py-4 rounded-lg font-bold text-lg">Build Your
+            Website</a>
+    </div>
+
+    <main class="pt-16 sm:pt-20">
+        <!-- ==================== HERO SECTION ==================== -->
+        <section
+            class="relative min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center overflow-hidden px-5 sm:px-8"
+            id="hero">
+            <!-- Background orbs -->
+            <div class="absolute inset-0 z-0 pointer-events-none">
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[800px] h-[500px] sm:h-[800px] bg-primary/4 rounded-full blur-[120px]">
+                </div>
+                <div
+                    class="absolute top-1/4 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-secondary/6 rounded-full blur-[100px]">
+                </div>
+            </div>
+
+            <div class="relative z-10 max-w-5xl text-center w-full">
+                <!-- Badge -->
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-high border border-outline-variant/20 mb-6 sm:mb-8">
+                    <span class="w-2 h-2 rounded-full bg-primary-fixed-dim animate-pulse"></span>
+                    <span
+                        class="text-[10px] sm:text-xs font-label uppercase tracking-widest text-on-surface-variant">Freelance
+                        Web Developer • 18 YEARS OLD • Tamil Nadu, India</span>
+                </div>
+
+                <h1
+                    class="text-3xl sm:text-5xl md:text-7xl font-black font-headline tracking-tighter mb-4 sm:mb-6 text-on-surface leading-tight uppercase">
+                    JOTHIVASAN
+                </h1>
+
+                <p
+                    class="text-lg sm:text-xl md:text-2xl text-on-surface-variant max-w-2xl mx-auto mb-4 sm:mb-6 font-semibold leading-relaxed">
+                    I build websites that <span class="text-primary">turn visitors into customers</span>
+                </p>
+
+                <p class="text-sm sm:text-base text-on-surface-variant/70 max-w-lg mx-auto mb-8 sm:mb-12">
+                    Helping businesses grow with modern, high-converting websites
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
+                    <a class="w-full sm:w-auto px-8 py-4 bg-primary text-on-primary rounded-lg font-bold text-base sm:text-lg transition-all hover:shadow-[0_0_35px_rgba(0,218,243,0.35)] shadow-[0_0_20px_rgba(0,218,243,0.2)] hover:scale-[1.05] active:scale-95 text-center bg-gradient-to-r from-primary-fixed-dim via-primary to-primary-container"
+                        href="form.html" id="btn-build-website">
+                        Build Your Website
+                    </a>
+                    <a class="w-full sm:w-auto px-8 py-4 bg-surface-container-low text-on-surface border border-outline-variant/30 rounded-lg font-bold text-base sm:text-lg hover:bg-surface-container transition-all text-center"
+                        href="#work" id="btn-view-projects">
+                        View Sample Projects
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== STATS ==================== -->
+        <section class="py-16 sm:py-24 border-y border-outline-variant/10 bg-surface-container-lowest">
+            <div class="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 text-center">
+                <div>
+                    <h3 class="text-3xl sm:text-4xl font-headline font-black text-primary mb-2">99%</h3>
+                    <p class="text-xs sm:text-sm font-label uppercase tracking-widest text-on-surface-variant">Always
+                        Online</p>
+                </div>
+                <div>
+                    <h3 class="text-3xl sm:text-4xl font-headline font-black text-secondary mb-2">2.4x</h3>
+                    <p class="text-xs sm:text-sm font-label uppercase tracking-widest text-on-surface-variant">More
+                        Sales</p>
+                </div>
+                <div>
+                    <h3 class="text-3xl sm:text-4xl font-headline font-black text-primary mb-2">5+</h3>
+                    <p class="text-xs sm:text-sm font-label uppercase tracking-widest text-on-surface-variant">Sites
+                        Made</p>
+                </div>
+                <div>
+                    <h3 class="text-3xl sm:text-4xl font-headline font-black text-secondary mb-2">100%</h3>
+                    <p class="text-xs sm:text-sm font-label uppercase tracking-widest text-on-surface-variant">Happy
+                        Clients</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TOOLS SECTION (Infinite Scroll) ==================== -->
+        <section class="py-16 sm:py-24 px-5 sm:px-8 overflow-hidden" id="tools">
+            <div class="max-w-7xl mx-auto mb-10 sm:mb-14">
+                <h2 class="text-sm font-label uppercase tracking-[0.3em] text-primary mb-3">What I Use</h2>
+                <h3 class="text-2xl sm:text-4xl font-headline font-extrabold text-on-surface">Tools & Technologies</h3>
+            </div>
+            <div class="relative w-full overflow-hidden"
+                style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+                <div class="scroll-track flex gap-8 sm:gap-12 w-max">
+                    <!-- First set -->
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-primary">html</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">HTML5</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-primary">css</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">CSS3</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-primary">javascript</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">JavaScript</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-secondary">code</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">React</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-secondary">settings</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">Node.js</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-primary">palette</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">Tailwind</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-secondary">design_services</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">Figma</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-primary">database</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">Database</span>
+                    </div>
+                    <!-- Duplicate set for seamless loop -->
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-primary">html</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">HTML5</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-primary">css</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">CSS3</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-primary">javascript</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">JavaScript</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-secondary">code</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">React</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-secondary">settings</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">Node.js</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-primary">palette</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">Tailwind</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-secondary">design_services</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">Figma</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-container-low border border-outline-variant/10 shrink-0">
+                        <span class="material-symbols-outlined text-3xl text-primary">database</span>
+                        <span
+                            class="font-label text-sm uppercase tracking-wider text-on-surface-variant font-medium">Database</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PROJECTS ==================== -->
+        <section class="py-16 sm:py-32 bg-surface-container-low/50 px-5 sm:px-8" id="work">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-10 sm:mb-16">
+                    <h2 class="text-sm font-label uppercase tracking-[0.3em] text-secondary mb-3 sm:mb-4">My Projects
+                    </h2>
+                    <h3 class="text-2xl sm:text-4xl font-headline font-extrabold text-on-surface">Sample Websites</h3>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 sm:gap-12">
+                    <!-- Gym Project -->
+                    <div class="project-card group rounded-2xl glass-card p-4 sm:p-6" id="project-gym">
+                        <div class="relative rounded-xl overflow-hidden aspect-video mb-6">
+                                <img alt="Gym Website — IronCore Fitness"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                    src="gym_project.png" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-surface/80 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 flex gap-2">
+                                <span
+                                    class="bg-primary/15 backdrop-blur-md text-primary px-3 py-1 rounded-full text-xs font-label uppercase tracking-wider">HTML/CSS</span>
+                                <span
+                                    class="bg-primary/15 backdrop-blur-md text-primary px-3 py-1 rounded-full text-xs font-label uppercase tracking-wider">JavaScript</span>
+                            </div>
+                        </div>
+                        <h4 class="text-xl sm:text-2xl font-headline font-bold mb-3">Gym Website</h4>
+                        <p class="text-on-surface-variant leading-relaxed mb-4 text-sm sm:text-base">Designed to
+                            increase membership signups with a powerful, modern interface and smooth user experience.
+                        </p>
+                        <a class="inline-flex items-center gap-2 text-primary font-bold text-sm group-hover:gap-3 transition-all"
+                            href="https://sample1-gym.vercel.app" target="_blank">
+                            View Project <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                        </a>
+                    </div>
+
+                    <!-- Restaurant Project -->
+                    <div class="project-card group rounded-2xl glass-card p-4 sm:p-6" id="project-restaurant">
+                        <div class="relative rounded-xl overflow-hidden aspect-video mb-6">
+                                <img alt="Restaurant Website — Urban Tandoor"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                    src="restaurant_project.png" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-surface/80 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 flex gap-2">
+                                <span
+                                    class="bg-secondary/15 backdrop-blur-md text-secondary px-3 py-1 rounded-full text-xs font-label uppercase tracking-wider">HTML/CSS</span>
+                                <span
+                                    class="bg-secondary/15 backdrop-blur-md text-secondary px-3 py-1 rounded-full text-xs font-label uppercase tracking-wider">JavaScript</span>
+                            </div>
+                        </div>
+                        <h4 class="text-xl sm:text-2xl font-headline font-bold mb-3">Restaurant Website</h4>
+                        <p class="text-on-surface-variant leading-relaxed mb-4 text-sm sm:text-base">Built to attract
+                            customers and simplify reservations with an elegant dining experience online.</p>
+                        <a class="inline-flex items-center gap-2 text-secondary font-bold text-sm group-hover:gap-3 transition-all"
+                            href="https://sample2-restaurant.vercel.app" target="_blank">
+                            View Project <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== WHY PICK ME ==================== -->
+        <section class="py-16 sm:py-32 px-5 sm:px-8" id="why-me">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+                    <div>
+                        <h2 class="text-sm font-label uppercase tracking-[0.3em] text-primary mb-3 sm:mb-4">Why Pick Me
+                        </h2>
+                        <h3
+                            class="text-2xl sm:text-4xl md:text-5xl font-headline font-extrabold mb-6 sm:mb-8 leading-tight">
+                            I build sites to help you grow, <br class="hidden sm:block" />not just to look pretty.</h3>
+                        <p class="text-on-surface-variant text-base sm:text-lg leading-relaxed mb-8 sm:mb-12">I combine
+                            smart design with fast code to make websites that work hard for your business 24/7.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-11 h-11 sm:w-12 sm:h-12 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                    <span class="material-symbols-outlined">groups</span>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold mb-1 text-sm sm:text-base">Get More Visitors</h5>
+                                    <p class="text-xs sm:text-sm text-on-surface-variant">I make sites easy to find on
+                                        Google.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-11 h-11 sm:w-12 sm:h-12 shrink-0 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+                                    <span class="material-symbols-outlined">trending_up</span>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold mb-1 text-sm sm:text-base">Make More Sales</h5>
+                                    <p class="text-xs sm:text-sm text-on-surface-variant">I design sites that guide
+                                        people to buy.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-11 h-11 sm:w-12 sm:h-12 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                    <span class="material-symbols-outlined">verified_user</span>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold mb-1 text-sm sm:text-base">Look Professional</h5>
+                                    <p class="text-xs sm:text-sm text-on-surface-variant">A clean site makes people
+                                        trust you.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-11 h-11 sm:w-12 sm:h-12 shrink-0 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+                                    <span class="material-symbols-outlined">public</span>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold mb-1 text-sm sm:text-base">Modern Look</h5>
+                                    <p class="text-xs sm:text-sm text-on-surface-variant">New technology that stays fast
+                                        for years.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative hidden lg:block">
+                        <div class="aspect-square rounded-3xl overflow-hidden glass-card p-4 relative z-10">
+                            <img alt="Developer at work"
+                                class="w-full h-full object-cover rounded-2xl grayscale hover:grayscale-0 transition-all duration-700"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCveuVWCcwQswaI6x2FOVoGbL3b3I2VkeAJInuJFUKdMAl7YVMga2_ec1xbXSubnz8fedCNY0rlcAEG5qIAhSJzAd441ip2HcTrl2pkcnxq0oJqVuyFhDOUd7Wvab5PDv34mvh9KJ4CdiGeEctBHhV7D_mJwrHU9v60Npc7DluqvW8sMZcb4Ou2BHW0S2GoBrAWfNPV3g05jnFyKIk7ul_gtFVSc4NXdl2fbRPCUYcwBeS9p_8L1jm1fsLzusAeF2EGPhWVz_imATPy" />
+                        </div>
+                        <div class="absolute -top-10 -right-10 w-48 h-48 bg-primary/8 rounded-full blur-[80px]"></div>
+                        <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-secondary/8 rounded-full blur-[80px]">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== HOW I HELP YOUR BUSINESS ==================== -->
+        <section class="py-16 sm:py-32 bg-surface-container-lowest px-5 sm:px-8" id="business-help">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-10 sm:mb-16">
+                    <h2 class="text-sm font-label uppercase tracking-[0.3em] text-primary mb-3 sm:mb-4">Results That
+                        Matter</h2>
+                    <h3 class="text-2xl sm:text-4xl font-headline font-extrabold text-on-surface">How I Help Your
+                        Business</h3>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="value-card p-6 sm:p-8 rounded-2xl glass-card text-center" id="value-customers">
+                        <div
+                            class="w-14 h-14 mx-auto mb-5 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined text-3xl">person_add</span>
+                        </div>
+                        <h4 class="text-lg font-headline font-bold mb-2">Get More Customers</h4>
+                        <p class="text-sm text-on-surface-variant leading-relaxed">Your website works 24/7 to bring in
+                            new leads and grow your business.</p>
+                    </div>
+                    <div class="value-card p-6 sm:p-8 rounded-2xl glass-card text-center" id="value-sales">
+                        <div
+                            class="w-14 h-14 mx-auto mb-5 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
+                            <span class="material-symbols-outlined text-3xl">shopping_cart</span>
+                        </div>
+                        <h4 class="text-lg font-headline font-bold mb-2">Increase Bookings & Sales</h4>
+                        <p class="text-sm text-on-surface-variant leading-relaxed">Smart design that guides visitors to
+                            take action and convert.</p>
+                    </div>
+                    <div class="value-card p-6 sm:p-8 rounded-2xl glass-card text-center" id="value-trust">
+                        <div
+                            class="w-14 h-14 mx-auto mb-5 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined text-3xl">shield</span>
+                        </div>
+                        <h4 class="text-lg font-headline font-bold mb-2">Build Trust</h4>
+                        <p class="text-sm text-on-surface-variant leading-relaxed">A professional site makes your
+                            business look credible and reliable.</p>
+                    </div>
+                    <div class="value-card p-6 sm:p-8 rounded-2xl glass-card text-center" id="value-presence">
+                        <div
+                            class="w-14 h-14 mx-auto mb-5 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
+                            <span class="material-symbols-outlined text-3xl">language</span>
+                        </div>
+                        <h4 class="text-lg font-headline font-bold mb-2">Improve Online Presence</h4>
+                        <p class="text-sm text-on-surface-variant leading-relaxed">Be found easily on Google and social
+                            media by your target audience.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PRICING ==================== -->
+        <section class="py-16 sm:py-32 px-5 sm:px-8" id="pricing">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12 sm:mb-20">
+                    <h2 class="text-sm font-label uppercase tracking-[0.3em] text-secondary mb-3 sm:mb-4">Pricing</h2>
+                    <h3 class="text-2xl sm:text-4xl font-headline font-extrabold">Plans for Every Business</h3>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                    <!-- Starter -->
+                    <div class="pricing-card p-8 sm:p-10 rounded-2xl glass-card flex flex-col" id="price-starter">
+                        <h4 class="text-xl font-headline font-bold mb-2">Starter</h4>
+                        <p class="text-sm text-on-surface-variant mb-6 sm:mb-8">Perfect for new businesses.</p>
+                        <div class="text-3xl sm:text-4xl font-black mb-8 sm:mb-10">₹3,000<span
+                                class="text-sm font-medium text-on-surface-variant"> – ₹5,000</span></div>
+                        <ul class="space-y-3 sm:space-y-4 mb-8 sm:mb-12 flex-grow">
+                            <li class="flex items-center gap-3 text-sm"><span
+                                    class="material-symbols-outlined text-primary text-base">check_circle</span> Up to 3
+                                Pages</li>
+                            <li class="flex items-center gap-3 text-sm"><span
+                                    class="material-symbols-outlined text-primary text-base">check_circle</span> Mobile
+                                Responsive</li>
+                            <li class="flex items-center gap-3 text-sm"><span
+                                    class="material-symbols-outlined text-primary text-base">check_circle</span> Contact
+                                Form</li>
+                            <li class="flex items-center gap-3 text-sm"><span
+                                    class="material-symbols-outlined text-primary text-base">check_circle</span> 1 Week
+                                Support</li>
+                        </ul>
+                        <a href="form.html"
+                            class="w-full py-3.5 sm:py-4 border border-outline-variant hover:bg-surface-container-high rounded-lg font-bold transition-all text-center block">Get
+                            Started</a>
+                    </div>
+                    <!-- Professional -->
+                    <div class="pricing-card p-8 sm:p-10 rounded-2xl glass-card border-primary/20 relative flex flex-col sm:scale-105 shadow-[0_0_30px_rgba(0,218,243,0.06)]"
+                        id="price-professional">
+                        <div
+                            class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-4 py-1 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-widest">
+                            Most Popular</div>
+                        <h4 class="text-xl font-headline font-bold mb-2">Professional</h4>
+                        <p class="text-sm text-on-surface-variant mb-6 sm:mb-8">For growing businesses.</p>
+                        <div class="text-3xl sm:text-4xl font-black mb-8 sm:mb-10">₹6,000<span
+                                class="text-sm font-medium text-on-surface-variant"> – ₹10,000</span></div>
+                        <ul class="space-y-3 sm:space-y-4 mb-8 sm:mb-12 flex-grow">
+                            <li class="flex items-center gap-3 text-sm"><span
+                                    class="material-symbols-outlined text-primary text-base">check_circle</span> Up to 7
+                                Pages</li>
+                            <li class="flex items-center gap-3 text-sm"><span
+                                    class="material-symbols-outlined text-primary text-base">check_circle</span> SEO
+                                Optimized</li>
+                            <li class="flex items-center gap-3 text-sm"><span
+                                    class="material-symbols-outlined text-primary text-base">check_circle</span>
+                                WhatsApp Integration</li>
+                            <li class="flex items-center gap-3 text-sm"><span
+                                    class="material-symbols-outlined text-primary text-base">check_circle</span> 2 Weeks
+                                Support</li>
+                        </ul>
+                        <a href="form.html"
+                            class="w-full py-3.5 sm:py-4 bg-primary text-on-primary rounded-lg font-bold transition-all text-center block hover:shadow-[0_0_15px_rgba(0,218,243,0.12)]">Start
+                            Growing</a>
+                    </div>
+                    <!-- Custom -->
+                    <div class="pricing-card p-8 sm:p-10 rounded-2xl glass-card flex flex-col sm:col-span-2 lg:col-span-1"
+                        id="price-custom">
+                        <h4 class="text-xl font-headline font-bold mb-2">Custom</h4>
+                        <p class="text-sm text-on-surface-variant mb-6 sm:mb-8">Full custom solution.</p>
+                        <div class="text-3xl sm:text-4xl font-black mb-8 sm:mb-10">₹12,000<span
+                                class="text-sm font-medium text-on-surface-variant">+</span></div>
+                        <ul class="space-y-3 sm:space-y-4 mb-8 sm:mb-12 flex-grow">
+                            <li class="flex items-center gap-3 text-sm"><span
+                                    class="material-symbols-outlined text-primary text-base">check_circle</span>
+                                Unlimited Pages</li>
+                            <li class="flex items-center gap-3 text-sm"><span
+                                    class="material-symbols-outlined text-primary text-base">check_circle</span>
+                                Advanced Features</li>
+                            <li class="flex items-center gap-3 text-sm"><span
+                                    class="material-symbols-outlined text-primary text-base">check_circle</span>
+                                Priority Support</li>
+                            <li class="flex items-center gap-3 text-sm"><span
+                                    class="material-symbols-outlined text-primary text-base">check_circle</span> 1 Month
+                                Support</li>
+                        </ul>
+                        <a href="form.html"
+                            class="w-full py-3.5 sm:py-4 border border-outline-variant hover:bg-surface-container-high rounded-lg font-bold transition-all text-center block">Let's
+                            Talk</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ABOUT ==================== -->
+        <section class="py-16 sm:py-32 px-5 sm:px-8" id="about">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-sm font-label uppercase tracking-[0.3em] text-primary mb-6 sm:mb-8">The Person Behind
+                    the Code</h2>
+                <p class="text-xl sm:text-2xl md:text-3xl font-headline leading-snug text-on-surface mb-6 sm:mb-8">
+                    "I am an 18-year-old developer from Tamil Nadu, India. I believe a good website should be easy to
+                    use. My job is to make your site work so well that you don't even have to think about it."
+                </p>
+                <div class="flex items-center justify-center gap-4">
+                    <div class="w-10 sm:w-12 h-0.5 bg-outline-variant"></div>
+                    <span
+                        class="font-headline font-extrabold uppercase tracking-widest text-on-surface-variant text-sm sm:text-base">Jothivasan V</span>
+                    <div class="w-10 sm:w-12 h-0.5 bg-outline-variant"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== FAQ ==================== -->
+        <section class="py-16 sm:py-32 bg-surface-container-lowest/30 px-5 sm:px-8" id="faqs">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12 sm:mb-20">
+                    <h2 class="text-sm font-label uppercase tracking-[0.3em] text-primary mb-3 sm:mb-4">FAQs</h2>
+                    <h3 class="text-2xl sm:text-4xl font-headline font-extrabold text-on-surface">Common Questions</h3>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item group rounded-2xl glass-card overflow-hidden transition-all duration-300">
+                        <button
+                            class="faq-toggle w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between text-left group-hover:bg-surface-container-high/50 transition-colors">
+                            <span class="font-headline font-bold text-base sm:text-lg pr-4">How long does it take to launch my site?</span>
+                            <span class="material-symbols-outlined text-primary transition-transform duration-300 faq-icon">expand_more</span>
+                        </button>
+                        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6 sm:px-8">
+                            <p class="pb-6 sm:pb-8 text-on-surface-variant text-sm sm:text-base leading-relaxed">
+                                A standard portfolio or business website typically takes 3-7 business days from start to launch, depending on the complexity and how quickly we finalize the content.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item group rounded-2xl glass-card overflow-hidden transition-all duration-300">
+                        <button
+                            class="faq-toggle w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between text-left group-hover:bg-surface-container-high/50 transition-colors">
+                            <span class="font-headline font-bold text-base sm:text-lg pr-4">What is the cost of building a website?</span>
+                            <span class="material-symbols-outlined text-primary transition-transform duration-300 faq-icon">expand_more</span>
+                        </button>
+                        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6 sm:px-8">
+                            <p class="pb-6 sm:pb-8 text-on-surface-variant text-sm sm:text-base leading-relaxed">
+                                Pricing starts from ₹3,000 for a Starter site. For more advanced features or custom designs, check my pricing section or message me for a custom quote tailored to your needs.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item group rounded-2xl glass-card overflow-hidden transition-all duration-300">
+                        <button
+                            class="faq-toggle w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between text-left group-hover:bg-surface-container-high/50 transition-colors">
+                            <span class="font-headline font-bold text-base sm:text-lg pr-4">Will my website work well on mobile phones?</span>
+                            <span class="material-symbols-outlined text-primary transition-transform duration-300 faq-icon">expand_more</span>
+                        </button>
+                        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6 sm:px-8">
+                            <p class="pb-6 sm:pb-8 text-on-surface-variant text-sm sm:text-base leading-relaxed">
+                                Definitely! Every website I build is developed with a mobile-first approach, ensuring it looks stunning and works perfectly on smartphones, tablets, and desktops.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item group rounded-2xl glass-card overflow-hidden transition-all duration-300">
+                        <button
+                            class="faq-toggle w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between text-left group-hover:bg-surface-container-high/50 transition-colors">
+                            <span class="font-headline font-bold text-base sm:text-lg pr-4">Who will own the final website?</span>
+                            <span class="material-symbols-outlined text-primary transition-transform duration-300 faq-icon">expand_more</span>
+                        </button>
+                        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6 sm:px-8">
+                            <p class="pb-6 sm:pb-8 text-on-surface-variant text-sm sm:text-base leading-relaxed">
+                                You have 100% ownership of the final website. Once the project is complete and payment is settled, all files, design assets, and domains belong entirely to you.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item group rounded-2xl glass-card overflow-hidden transition-all duration-300">
+                        <button
+                            class="faq-toggle w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between text-left group-hover:bg-surface-container-high/50 transition-colors">
+                            <span class="font-headline font-bold text-base sm:text-lg pr-4">Do you provide maintenance and updates?</span>
+                            <span class="material-symbols-outlined text-primary transition-transform duration-300 faq-icon">expand_more</span>
+                        </button>
+                        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-6 sm:px-8">
+                            <p class="pb-6 sm:pb-8 text-on-surface-variant text-sm sm:text-base leading-relaxed">
+                                Yes, I offer ongoing maintenance and support to keep your site updated, secure, and running smoothly. Some of my plans even include a free support period to get you started.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CONTACT ==================== -->
+        <section class="py-16 sm:py-32 px-5 sm:px-8 relative overflow-hidden" id="contact">
+            <div class="absolute inset-0 bg-primary/3 -skew-y-6 translate-y-32 pointer-events-none"></div>
+            <div
+                class="max-w-5xl mx-auto relative z-10 glass-card rounded-2xl sm:rounded-3xl p-8 sm:p-12 md:p-24 text-center">
+                <h2 class="text-2xl sm:text-4xl md:text-5xl font-headline font-black mb-4 sm:mb-6">Ready to start?</h2>
+                <p class="text-base sm:text-lg text-on-surface-variant mb-8 sm:mb-12 max-w-2xl mx-auto">Don't lose
+                    customers because of an old site. Let's build a modern website that helps your business today.</p>
+                <div class="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6 justify-center">
+                    <a class="flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 bg-primary text-on-primary rounded-xl font-bold text-base sm:text-lg hover:scale-[1.02] transition-transform hover:shadow-[0_0_20px_rgba(0,218,243,0.12)]"
+                        href="mailto:hiphoptamizha1402@gmail.com?subject=Website%20Inquiry&body=Hello%2C%20I%20would%20like%20to%20build%20a%20website."
+                        id="contact-email">
+                        <span class="material-symbols-outlined">mail</span>
+                        Email Me
+                    </a>
+                    <a class="flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/20 rounded-xl font-bold text-base sm:text-lg hover:bg-[#25D366]/15 transition-all"
+                        href="https://wa.me/919342481381?text=Hello%20%F0%9F%91%8B%2C%20I%20would%20like%20to%20discuss%20building%20a%20website."
+                        target="_blank" rel="noopener" id="contact-whatsapp">
+                        <span class="material-symbols-outlined">chat</span>
+                        WhatsApp
+                    </a>
+                    <a class="flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 bg-surface-container-high text-on-surface border border-outline-variant/30 rounded-xl font-bold text-base sm:text-lg hover:bg-surface-variant transition-all hover:scale-[1.02]"
+                        href="tel:+919342481381" id="contact-call">
+                        <span class="material-symbols-outlined">call</span>
+                        Call Me
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-surface-container-lowest w-full py-8 sm:py-12 border-t border-outline-variant/10">
+        <div
+            class="flex flex-col md:flex-row justify-between items-center px-5 sm:px-12 gap-4 sm:gap-6 max-w-7xl mx-auto">
+            <div class="font-label text-xs uppercase tracking-[0.1em] text-on-surface-variant text-center md:text-left">
+                © 2024 JOTHIVASAN. Building websites from Tamil Nadu, India.
+            </div>
+            <div class="flex gap-6 sm:gap-8 font-label text-xs uppercase tracking-[0.1em]">
+                <a class="text-on-surface-variant hover:text-primary transition-all" href="#">GitHub</a>
+                <a class="text-on-surface-variant hover:text-primary transition-all" href="#">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+        // Mobile menu
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeMenu() {
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        menuClose.addEventListener('click', closeMenu);
+
+        // Close on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMenu();
+        });
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const toggle = item.querySelector('.faq-toggle');
+            const answer = item.querySelector('.faq-answer');
+            const icon = item.querySelector('.faq-icon');
+
+            toggle.addEventListener('click', () => {
+                const isOpen = item.classList.contains('active');
+
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('.faq-answer').style.maxHeight = '0';
+                        otherItem.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Toggle current item
+                if (isOpen) {
+                    item.classList.remove('active');
+                    answer.style.maxHeight = '0';
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    item.classList.add('active');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
