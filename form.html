@@ -250,16 +250,11 @@
                 </div>
 
                 <!-- Submit -->
-                <div class="pt-6 flex flex-col sm:flex-row gap-4">
-                    <button type="submit" id="btn-submit-email" name="method" value="email"
-                        class="flex-1 bg-primary text-on-primary font-headline font-extrabold px-8 py-4 rounded-lg transition-all hover:shadow-[0_0_20px_rgba(0,218,243,0.12)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 text-base">
-                        <span class="material-symbols-outlined text-lg">mail</span>
-                        Send via Email
-                    </button>
-                    <button type="submit" id="btn-submit-whatsapp" name="method" value="whatsapp"
-                        class="flex-1 bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/20 font-headline font-extrabold px-8 py-4 rounded-lg transition-all hover:bg-[#25D366]/15 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 text-base">
-                        <span class="material-symbols-outlined text-lg">chat</span>
-                        Send via WhatsApp
+                <div class="pt-6">
+                    <button type="submit" id="btn-submit"
+                        class="w-full bg-primary text-on-primary font-headline font-extrabold px-8 py-4 rounded-lg transition-all hover:shadow-[0_0_25px_rgba(0,218,243,0.2)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 text-base bg-gradient-to-r from-primary-fixed-dim via-primary to-primary-container">
+                        <span class="material-symbols-outlined text-lg">send</span>
+                        Submit Request
                     </button>
                 </div>
             </form>
@@ -303,15 +298,17 @@
 
     <!-- ==================== FOOTER ==================== -->
     <footer class="relative z-10 bg-surface-container-lowest w-full py-6 sm:py-8 border-t border-outline-variant/10">
-        <div class="flex flex-col sm:flex-row justify-between items-center px-5 sm:px-12 gap-3 max-w-7xl mx-auto">
-            <div class="font-label text-xs uppercase tracking-[0.1em] text-on-surface-variant">
-                © 2024 JOTHIVASAN
-            </div>
-            <div class="flex gap-4">
+        <div class="flex flex-col items-center px-5 sm:px-12 gap-3 max-w-7xl mx-auto text-center">
+            <div class="flex items-center gap-3">
                 <span class="material-symbols-outlined text-sm text-primary"
                     style="font-variation-settings: 'FILL' 1;">verified_user</span>
                 <span class="text-[10px] font-label text-on-surface-variant/50 uppercase tracking-widest">Your info is
                     safe with us</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="w-6 h-[1px] bg-primary/30"></div>
+                <span class="font-label text-[10px] uppercase tracking-[0.2em] text-primary/50">Designed & Built by Jothivasan</span>
+                <div class="w-6 h-[1px] bg-primary/30"></div>
             </div>
         </div>
     </footer>
@@ -353,13 +350,8 @@
         form.addEventListener('submit', async function (e) {
             e.preventDefault();
             formData = getFormData();
-            const submitter = e.submitter;
-
-            if (submitter.id === 'btn-submit-email') {
-                await handleEmailSend(submitter);
-            } else if (submitter.id === 'btn-submit-whatsapp') {
-                handleWhatsAppSend();
-            }
+            const btn = document.getElementById('btn-submit');
+            await handleEmailSend(btn);
         });
 
         // ===== Gmail Flow (EmailJS) =====
@@ -386,34 +378,11 @@
                 console.error('EmailJS Error:', error);
                 btn.innerHTML = originalText;
                 btn.disabled = false;
-                alert('Failed to send. Please try WhatsApp instead, or email directly at hiphoptamizha1402@gmail.com');
+                alert('Something went wrong. Please try again later.');
             }
         }
 
-        // ===== WhatsApp Flow =====
-        function handleWhatsAppSend() {
-            const msg = [
-                'New Website Request',
-                '',
-                'Name: ' + formData.name,
-                'Business: ' + formData.business_name,
-                'Type: ' + formData.business_type,
-                'Description: ' + formData.description,
-                'Phone: ' + formData.phone,
-                'Email: ' + formData.email,
-                'Budget: ' + formData.budget,
-                '',
-                'Looking forward to discussing next steps.'
-            ].join('\n');
 
-            const encoded = encodeURIComponent(msg);
-            const url = 'https://wa.me/919342481381?text=' + encoded;
-            window.open(url, '_blank');
-
-            // Show success overlay even for WhatsApp for consistency
-            successOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
 
         // ===== Close overlays on Escape =====
         document.addEventListener('keydown', function (e) {
